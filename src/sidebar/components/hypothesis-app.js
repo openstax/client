@@ -37,7 +37,6 @@ function HypothesisAppController(
   this.auth = {status: 'unknown'};
 
   // App dialogs
-  this.accountDialog = {visible: false};
   this.shareDialog = {visible: false};
   this.helpPanel = {visible: false};
 
@@ -63,7 +62,6 @@ function HypothesisAppController(
   // Reload the view when the user switches accounts
   $scope.$on(events.USER_CHANGED, function (event, data) {
     self.auth = authStateFromUserID(data.userid);
-    self.accountDialog.visible = false;
 
     if (!data || !data.initialLoad) {
       $route.reload();
@@ -103,19 +101,11 @@ function HypothesisAppController(
       return Promise.resolve();
     }
 
-    if (auth.login) {
-      // OAuth-based login 😀
-      return auth.login().then(() => {
-        session.reload();
-      }).catch((err) => {
-        flash.error(err.message);
-      });
-    } else {
-      // Legacy cookie-based login 😔.
-      self.accountDialog.visible = true;
-      scrollToView('login-form');
-      return Promise.resolve();
-    }
+    return auth.login().then(() => {
+      session.reload();
+    }).catch((err) => {
+      flash.error(err.message);
+    });
   };
 
   this.signUp = function(){
@@ -176,7 +166,6 @@ function HypothesisAppController(
       return;
     }
 
-    this.accountDialog.visible = false;
     session.logout();
   };
 
