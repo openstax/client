@@ -83,7 +83,7 @@ function session($q, $rootScope, analytics, annotationUI, auth,
   function update(model) {
     var prevSession = annotationUI.getState().session;
 
-    var isInitialLoad = !prevSession.csrf;
+    var isInitialLoad = prevSession.groups.length === 0;
 
     var userChanged = model.userid !== prevSession.userid;
     var groupsChanged = !angular.equals(model.groups, prevSession.groups);

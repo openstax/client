@@ -27,7 +27,9 @@ describe('sidebar.session', function () {
   beforeEach(function () {
     sandbox = sinon.sandbox.create();
 
-    var state = {};
+    var state = {
+      groups: [],
+    };
     fakeAnalytics = {
       track: sinon.stub(),
       events: require('../analytics')().events,
