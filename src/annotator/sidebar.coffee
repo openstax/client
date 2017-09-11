@@ -236,7 +236,7 @@ module.exports = class Sidebar extends Host
       .addClass('h-icon-chevron-right')
 
     if @options.showHighlights == 'whenSidebarOpen'
-      @setVisibleHighlights(true)
+      @setAllVisibleHighlights(true)
 
     this._notifyOfLayoutChange(true)
 
@@ -250,7 +250,7 @@ module.exports = class Sidebar extends Host
       .addClass('h-icon-chevron-left')
 
     if @options.showHighlights == 'whenSidebarOpen'
-      @setVisibleHighlights(false)
+      @setAllVisibleHighlights(false)
 
     this._notifyOfLayoutChange(false)
 

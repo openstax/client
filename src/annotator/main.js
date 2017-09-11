@@ -59,6 +59,11 @@ $.noConflict(true)(function() {
     window.__hypothesis_frame = true;
   }
 
+  if(Array.isArray(config.services) && config.services.length > 0) {
+    delete pluginClasses.BucketBar;
+    delete pluginClasses.Toolbar;
+  }
+
   config.pluginClasses = pluginClasses;
 
   window.annotator = new Klass(document.body, config);

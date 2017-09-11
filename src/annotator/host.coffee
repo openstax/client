@@ -44,7 +44,11 @@ module.exports = class Host extends Guest
     @frame = $('<div></div>')
     .css('display', 'none')
     .addClass('annotator-frame annotator-outer')
-    .appendTo(element)
+
+    if config.services?[0]
+      @frame.addClass('annotator-frame--third-party')
+
+    @frame.appendTo(element)
 
     super
 

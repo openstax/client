@@ -5,6 +5,7 @@
       class="thread-list__card"
       ng-mouseenter="vm.onFocus({annotation: child.annotation})"
       ng-click="vm.onSelect({annotation: child.annotation})"
+      ng-if="!vm.isThirdPartyUser()"
       ng-mouseleave="vm.onFocus({annotation: null})"
       ng-repeat="child in vm.virtualThreadList.visibleThreads track by child.id">
       <annotation-thread
@@ -14,6 +15,22 @@
         on-force-visible="vm.onForceVisible({thread: thread})">
       </annotation-thread>
   </li>
+  <div ng-if="vm.isThirdPartyUser()"
+    ng-repeat="child in vm.virtualThreadList.visibleThreads track by child.id">
+    <li id="{{child.id}}"
+      class="thread-list__card thread-list__card--third-party"
+      ng-mouseenter="vm.onFocus({annotation: child.annotation})"
+      ng-click="vm.onSelect({annotation: child.annotation})"
+      ng-mouseleave="vm.onFocus({annotation: null})">
+      <annotation-thread
+        thread="child"
+        show-document-info="vm.showDocumentInfo"
+        on-change-collapsed="vm.onChangeCollapsed({id: id, collapsed: collapsed})"
+        on-force-visible="vm.onForceVisible({thread: thread})">
+      </annotation-thread>
+    </li>
+    <hr class="thread-list__separator" />
+  </div>
   <li id="{{child.id}}"
       ng-show="false"
       ng-repeat="child in vm.virtualThreadList.invisibleThreads track by child.id">
