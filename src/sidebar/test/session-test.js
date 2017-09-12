@@ -111,6 +111,7 @@ describe('sidebar.session', function () {
       beforeEach(() => {
         fakeStore.profile.read.returns(Promise.resolve({
           userid: 'acct:user@hypothes.is',
+          groups: [],
         }));
       });
 
@@ -183,6 +184,7 @@ describe('sidebar.session', function () {
       // Load the initial profile data, as the client will do on startup.
       fakeStore.profile.read.returns(Promise.resolve({
         userid: 'acct:user_a@hypothes.is',
+        groups: [],
       }));
       return session.load();
     });
@@ -190,6 +192,7 @@ describe('sidebar.session', function () {
     it('should clear cached data and reload', () => {
       fakeStore.profile.read.returns(Promise.resolve({
         userid: 'acct:user_b@hypothes.is',
+        groups: [],
       }));
 
       return session.reload().then(() => {
@@ -237,6 +240,7 @@ describe('sidebar.session', function () {
     it('reloads the profile', () => {
       fakeStore.profile.read.returns(Promise.resolve({
         userid: 'acct:initial_user@hypothes.is',
+        groups: [],
       }));
 
       return session.load().then(() => {
@@ -244,9 +248,11 @@ describe('sidebar.session', function () {
         // Simulate login change happening in a different tab.
         fakeStore.profile.read.returns(Promise.resolve({
           userid: 'acct:different_user@hypothes.is',
+          groups: [],
         }));
         $rootScope.$broadcast(events.OAUTH_TOKENS_CHANGED);
 
+        return session.load();
       }).then(() => {
         assert.equal(session.state.userid, 'acct:different_user@hypothes.is');
       });
